@@ -10,7 +10,7 @@ import (
 
 func WriteHead(dirPath, branchName string) error {
 	headPath := filepath.Join(dirPath, "HEAD")
-	refText := fmt.Sprintf("ref: refs/heads/%s", branchName)
+	refText := fmt.Sprintf("ref: refs/heads/%s\n", branchName)
 	return utils.WriteFile(headPath, refText)
 }
 

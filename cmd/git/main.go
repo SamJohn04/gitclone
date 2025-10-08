@@ -17,10 +17,14 @@ func main() {
 	}
 	switch os.Args[1] {
 	case "init":
-		start.InitCommand()
+		if start.InitCommand() {
+			os.Exit(1)
+		}
 	}
 }
 
 func showHelp() {
 	fmt.Println("usage: gitclone <command> [<args>]")
+	fmt.Println("commands currently implemented:")
+	fmt.Println("\tinit")
 }

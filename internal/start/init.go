@@ -8,20 +8,20 @@ import (
 	"github.com/SamJohn04/gitclone/internal/utils"
 )
 
-func InitCommand() {
+func InitCommand() bool {
 	gitPath, err := utils.GitPath()
 	if err != nil {
 		fmt.Println("Error:", err)
-		return
+		return true
 	}
 	if utils.PathExists(gitPath) {
 		fmt.Println("Reinitialization not yet implemented")
-		return
+		return true
 	} else {
 		err = os.Mkdir(gitPath, 0o755)
 		if err != nil {
 			fmt.Println("Error:", err)
-			return
+			return true
 		}
 	}
 
@@ -52,4 +52,5 @@ func InitCommand() {
 	files.MakeTagsInRefDir(gitPath)
 
 	fmt.Println("An empty repository initialized in", gitPath)
+	return false
 }
