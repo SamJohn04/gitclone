@@ -17,11 +17,7 @@ func main() {
 	}
 	switch os.Args[1] {
 	case "init":
-		err := start.InitCommand()
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
+		start.InitCommand()
 	}
 }
 
