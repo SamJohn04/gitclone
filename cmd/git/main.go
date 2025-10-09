@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/SamJohn04/gitclone/internal/start"
+	"github.com/SamJohn04/gitclone/internal/plumbing"
 )
 
 func main() {
@@ -18,7 +18,7 @@ func main() {
 	switch os.Args[1] {
 	case "init":
 		// TODO check for flags, etc.
-		err := start.InitCommand()
+		err := plumbing.InitCommand()
 		if err != nil {
 			fmt.Println("Error:", err)
 			os.Exit(1)
