@@ -15,6 +15,7 @@ func InitCommand() error {
 		return err
 	}
 	if utils.PathExists(gitPath) {
+		// TODO implement reinitialization
 		return errors.New("not implemented")
 	} else {
 		err = os.Mkdir(gitPath, 0o755)

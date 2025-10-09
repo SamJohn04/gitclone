@@ -17,6 +17,7 @@ func main() {
 	}
 	switch os.Args[1] {
 	case "init":
+		// TODO check for flags, etc.
 		err := start.InitCommand()
 		if err != nil {
 			fmt.Println("Error:", err)
