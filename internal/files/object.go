@@ -5,17 +5,29 @@ import (
 	"path/filepath"
 )
 
-func MakeObjectDir(dirPath string) error {
-	objectPath := filepath.Join(dirPath, "objects")
-	return os.Mkdir(objectPath, 0o755)
+func MakeObjectDirAndContents(dirPath string) error {
+	objectPath, err := MakeObjectDir(dirPath)
+	if err != nil {
+		return err
+	}
+	err = MakeInfoInObjectDir(objectPath)
+	if err != nil {
+		return err
+	}
+	return MakePackInObjectDir(objectPath)
 }
 
-func MakeInfoInObjectDir(dirPath string) error {
-	infoPath := filepath.Join(dirPath, "objects", "info")
+func MakeObjectDir(dirPath string) (string, error) {
+	objectPath := filepath.Join(dirPath, "objects")
+	return objectPath, os.Mkdir(objectPath, 0o755)
+}
+
+func MakeInfoInObjectDir(objectPath string) error {
+	infoPath := filepath.Join(objectPath, "info")
 	return os.Mkdir(infoPath, 0o755)
 }
 
-func MakePackInObjectDir(dirPath string) error {
-	packPath := filepath.Join(dirPath, "objects", "pack")
+func MakePackInObjectDir(objectPath string) error {
+	packPath := filepath.Join(objectPath, "pack")
 	return os.Mkdir(packPath, 0o755)
 }

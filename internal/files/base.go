@@ -8,6 +8,18 @@ import (
 	"github.com/SamJohn04/gitclone/internal/utils"
 )
 
+func WritaAllBaseFiles(dirPath, branchName string) error {
+	err := WriteHead(dirPath, branchName)
+	if err != nil {
+		return err
+	}
+	err = WriteConfig(dirPath)
+	if err != nil {
+		return err
+	}
+	return WriteDescription(dirPath)
+}
+
 func WriteHead(dirPath, branchName string) error {
 	headPath := filepath.Join(dirPath, "HEAD")
 	refText := fmt.Sprintf("ref: refs/heads/%s\n", branchName)

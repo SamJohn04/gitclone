@@ -17,7 +17,9 @@ func main() {
 	}
 	switch os.Args[1] {
 	case "init":
-		if start.InitCommand() {
+		err := start.InitCommand()
+		if err != nil {
+			fmt.Println("Error:", err)
 			os.Exit(1)
 		}
 	}

@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 )
 
-func MakeHooksDir(dirPath string) error {
+func MakeHooksDir(dirPath string) (string, error) {
 	hooksPath := filepath.Join(dirPath, "hooks")
-	return os.Mkdir(hooksPath, 0o755)
+	return hooksPath, os.Mkdir(hooksPath, 0o755)
 }

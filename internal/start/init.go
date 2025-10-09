@@ -1,6 +1,7 @@
 package start
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
@@ -8,49 +9,51 @@ import (
 	"github.com/SamJohn04/gitclone/internal/utils"
 )
 
-func InitCommand() bool {
+func InitCommand() error {
 	gitPath, err := utils.GitPath()
 	if err != nil {
-		fmt.Println("Error:", err)
-		return true
+		return err
 	}
 	if utils.PathExists(gitPath) {
-		fmt.Println("Reinitialization not yet implemented")
-		return true
+		return errors.New("not implemented")
 	} else {
 		err = os.Mkdir(gitPath, 0o755)
 		if err != nil {
-			fmt.Println("Error:", err)
-			return true
+			return err
 		}
 	}
 
-	// !ignore return err
-	files.WriteHead(gitPath, "main")
-	files.WriteConfig(gitPath)
-	files.WriteDescription(gitPath)
+	err = files.WritaAllBaseFiles(gitPath, "main")
+	if err != nil {
+		return err
+	}
 
-	// !ignore return err
-	files.MakeBranchDir(gitPath)
+	_, err = files.MakeBranchDir(gitPath)
+	if err != nil {
+		return err
+	}
 
-	// !ignore return err
 	// TODO add default hooks
-	files.MakeHooksDir(gitPath)
+	_, err = files.MakeHooksDir(gitPath)
+	if err != nil {
+		return err
+	}
 
-	// !ignore return err
-	files.MakeInfoDir(gitPath)
-	files.WriteExcludeInInfo(gitPath)
+	err = files.WriteInfoDirAndContents(gitPath)
+	if err != nil {
+		return err
+	}
 
-	// !ignore return err
-	files.MakeObjectDir(gitPath)
-	files.MakeInfoInObjectDir(gitPath)
-	files.MakePackInObjectDir(gitPath)
+	err = files.MakeObjectDirAndContents(gitPath)
+	if err != nil {
+		return err
+	}
 
-	// !ignore return err
-	files.MakeRefDir(gitPath)
-	files.MakeHeadsInRefDir(gitPath)
-	files.MakeTagsInRefDir(gitPath)
+	err = files.MakeRefDirAndConents(gitPath)
+	if err != nil {
+		return err
+	}
 
 	fmt.Println("An empty repository initialized in", gitPath)
-	return false
+	return nil
 }
