@@ -8,16 +8,22 @@ import (
 	"os"
 
 	"github.com/SamJohn04/gitclone/internal/plumbing"
+	"github.com/SamJohn04/gitclone/internal/cli"
 )
 
 func main() {
-	if len(os.Args) == 1 {
+	userInput := cli.ParseCommand()
+	if userInput.ShowHelp {
 		showHelp()
 		os.Exit(1)
 	}
-	switch os.Args[1] {
+	if userInput.Unknown {
+		os.Exit(1)
+	}
+
+	switch userInput.Action {
 	case "init":
-		// TODO check for flags, etc.
+    // TODO implement variety and verbosity
 		err := plumbing.InitCommand()
 		if err != nil {
 			fmt.Println("Error:", err)
