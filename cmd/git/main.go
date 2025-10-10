@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/SamJohn04/gitclone/internal/plumbing"
 	"github.com/SamJohn04/gitclone/internal/cli"
+	"github.com/SamJohn04/gitclone/internal/plumbing"
 )
 
 func main() {
@@ -23,12 +23,14 @@ func main() {
 
 	switch userInput.Action {
 	case "init":
-    // TODO implement variety and verbosity
+		// TODO implement variety and verbosity
 		err := plumbing.InitCommand()
 		if err != nil {
 			fmt.Println("Error:", err)
 			os.Exit(1)
 		}
+	case "hash-object":
+		plumbing.HashFile(os.Args[2], false)
 	}
 }
 
