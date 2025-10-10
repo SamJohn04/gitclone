@@ -7,16 +7,23 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/SamJohn04/gitclone/internal/cli"
 	"github.com/SamJohn04/gitclone/internal/start"
 )
 
 func main() {
-	if len(os.Args) == 1 {
+	userInput := cli.ParseCommand()
+	if userInput.ShowHelp {
 		showHelp()
 		os.Exit(1)
 	}
-	switch os.Args[1] {
+	if userInput.Unknown {
+		os.Exit(1)
+	}
+
+	switch userInput.Action {
 	case "init":
+		// TODO implement variety and verbosity
 		if start.InitCommand() {
 			os.Exit(1)
 		}
