@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 )
 
-func MakeBranchDir(dirPath string) error {
+func MakeBranchDir(dirPath string) (string, error) {
 	branchPath := filepath.Join(dirPath, "branches")
-	return os.Mkdir(branchPath, 0o755)
+	return branchPath, os.Mkdir(branchPath, 0o755)
 }

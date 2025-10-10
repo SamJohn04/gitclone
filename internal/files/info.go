@@ -6,13 +6,21 @@ import (
 	"path/filepath"
 )
 
-func MakeInfoDir(dirPath string) error {
-	infoPath := filepath.Join(dirPath, "info")
-	return os.Mkdir(infoPath, 0o755)
+func WriteInfoDirAndContents(dirPath string) error {
+	infoPath, err := MakeInfoDir(dirPath)
+	if err != nil {
+		return err
+	}
+	return WriteExcludeInInfo(infoPath)
 }
 
-func WriteExcludeInInfo(dirPath string) error {
-	excludePath := filepath.Join(dirPath, "info", "exclude")
+func MakeInfoDir(dirPath string) (string, error) {
+	infoPath := filepath.Join(dirPath, "info")
+	return infoPath, os.Mkdir(infoPath, 0o755)
+}
+
+func WriteExcludeInInfo(infoPath string) error {
+	excludePath := filepath.Join(infoPath, "exclude")
 	excludeFile, err := os.OpenFile(excludePath, os.O_CREATE|os.O_WRONLY, 0o644)
 	if err != nil {
 		return err

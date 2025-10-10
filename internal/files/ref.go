@@ -5,17 +5,29 @@ import (
 	"path/filepath"
 )
 
-func MakeRefDir(dirPath string) error {
-	refPath := filepath.Join(dirPath, "refs")
-	return os.Mkdir(refPath, 0o755)
+func MakeRefDirAndConents(dirPath string) error {
+	refPath, err := MakeRefDir(dirPath)
+	if err != nil {
+		return err
+	}
+	err = MakeHeadsInRefDir(refPath)
+	if err != nil {
+		return err
+	}
+	return MakeTagsInRefDir(refPath)
 }
 
-func MakeHeadsInRefDir(dirPath string) error {
-	headsPath := filepath.Join(dirPath, "refs", "heads")
+func MakeRefDir(dirPath string) (string, error) {
+	refPath := filepath.Join(dirPath, "refs")
+	return refPath, os.Mkdir(refPath, 0o755)
+}
+
+func MakeHeadsInRefDir(refPath string) error {
+	headsPath := filepath.Join(refPath, "heads")
 	return os.Mkdir(headsPath, 0o755)
 }
 
-func MakeTagsInRefDir(dirPath string) error {
-	tagsPath := filepath.Join(dirPath, "refs", "tags")
+func MakeTagsInRefDir(refPath string) error {
+	tagsPath := filepath.Join(refPath, "tags")
 	return os.Mkdir(tagsPath, 0o755)
 }
