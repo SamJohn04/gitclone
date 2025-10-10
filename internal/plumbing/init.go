@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/SamJohn04/gitclone/internal/constants"
 	"github.com/SamJohn04/gitclone/internal/files"
 	"github.com/SamJohn04/gitclone/internal/utils"
 )
@@ -24,7 +25,7 @@ func InitCommand() error {
 		}
 	}
 
-	err = files.WritaAllBaseFiles(gitPath, "main")
+	err = files.WritaAllBaseFiles(gitPath, constants.DefaultBranch)
 	if err != nil {
 		return err
 	}

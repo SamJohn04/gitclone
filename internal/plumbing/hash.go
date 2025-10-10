@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+
+	"github.com/SamJohn04/gitclone/internal/constants"
 )
 
 func HashFile(filename string, write bool) {
@@ -15,11 +17,16 @@ func HashFile(filename string, write bool) {
 		return
 	}
 
-	hashHex, store := HashObject("blob", data)
+	hashHex, store := HashObject(constants.FileStoreType, data)
 	if write {
 		dirname := hashHex[:2]
 		hashedFilename := hashHex[2:]
-		hashedPath := filepath.Join(".git.local", "objects", dirname, hashedFilename)
+		hashedPath := filepath.Join(
+			constants.GitDirName,
+			constants.ObjectDirName,
+			dirname,
+			hashedFilename,
+		)
 		os.MkdirAll(filepath.Dir(hashedPath), 0o755)
 		f, _ := os.Create(hashedPath)
 		defer f.Close()

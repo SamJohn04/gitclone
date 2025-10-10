@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+
+	"github.com/SamJohn04/gitclone/internal/constants"
 )
 
 func WriteInfoDirAndContents(dirPath string) error {
@@ -15,12 +17,12 @@ func WriteInfoDirAndContents(dirPath string) error {
 }
 
 func MakeInfoDir(dirPath string) (string, error) {
-	infoPath := filepath.Join(dirPath, "info")
+	infoPath := filepath.Join(dirPath, constants.InfoDirName)
 	return infoPath, os.Mkdir(infoPath, 0o755)
 }
 
 func WriteExcludeInInfo(infoPath string) error {
-	excludePath := filepath.Join(infoPath, "exclude")
+	excludePath := filepath.Join(infoPath, constants.ExcludeInInfoName)
 	excludeFile, err := os.OpenFile(excludePath, os.O_CREATE|os.O_WRONLY, 0o644)
 	if err != nil {
 		return err

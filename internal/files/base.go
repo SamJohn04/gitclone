@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/SamJohn04/gitclone/internal/constants"
 	"github.com/SamJohn04/gitclone/internal/utils"
 )
 
@@ -21,13 +22,13 @@ func WritaAllBaseFiles(dirPath, branchName string) error {
 }
 
 func WriteHead(dirPath, branchName string) error {
-	headPath := filepath.Join(dirPath, "HEAD")
+	headPath := filepath.Join(dirPath, constants.HeadName)
 	refText := fmt.Sprintf("ref: refs/heads/%s\n", branchName)
 	return utils.WriteFile(headPath, refText)
 }
 
 func WriteConfig(dirPath string) error {
-	configPath := filepath.Join(dirPath, "config")
+	configPath := filepath.Join(dirPath, constants.ConfigName)
 	configFile, err := os.OpenFile(configPath, os.O_CREATE|os.O_WRONLY, 0o644)
 	if err != nil {
 		return err
@@ -44,7 +45,7 @@ func WriteConfig(dirPath string) error {
 }
 
 func WriteDescription(dirPath string) error {
-	descriptionPath := filepath.Join(dirPath, "description")
+	descriptionPath := filepath.Join(dirPath, constants.DescriptionName)
 	return utils.WriteFile(descriptionPath,
 		"Unnamed repository; edit this file 'description' to name the repository.\n")
 }
